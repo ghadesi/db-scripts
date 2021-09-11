@@ -1,3 +1,10 @@
+## Dataset
+
+The Stack Overflow data has been extracted from the official [Stack Exchange data dump](https://archive.org/details/stackexchange) released 2021-09-07.
+
+The GitHub references have been retrieved from the [Google BigQuery GitHub data set](https://cloud.google.com/bigquery/public-data/github) on 2021-01-04 (last updated 2020-12-31 according to table info).
+
+
 ## Importing the SOTorrent dataset
 
 1. Unzip all CSV and XML files.
@@ -18,11 +25,7 @@
 
 4. Run the `load_sotorrent.sh` script.
 
-## Data
 
-The Stack Overflow data has been extracted from the official [Stack Exchange data dump](https://archive.org/details/stackexchange) released 2020-12-08.
-
-The GitHub references have been retrieved from the [Google BigQuery GitHub data set](https://cloud.google.com/bigquery/public-data/github) on 2021-01-04 (last updated 2020-12-31 according to table info).
 
 ## MySQL Troubleshooting
 
