@@ -37,7 +37,16 @@ As I mentioned before, on the [Stack Exchange data dump](https://archive.org/det
  ```
  1. Run the [`1_download_so-dump.sh`](so-dump/1_download_so-dump.sh) script. This script download files related to Stack Overflow.
  ```sh
-source ../db-scripts-master/sotorrent/so-dump/1_download_so-dump.sh
+chmod +x ../db-scripts-master/sotorrent/so-dump/1_download_so-dump.sh
+sh ../db-scripts-master/sotorrent/so-dump/1_download_so-dump.sh
+ ```
+If you are using SSH, it's better to run the task at background.
+ ```sh
+nohup sh ../db-scripts-master/sotorrent/so-dump/1_download_so-dump.sh &
+```
+By the bellow command we can check the status of download.
+ ```sh
+watch tail -2 nohup.out
 ```
  2. Run the [`2_process_7z_files.sh`](so-dump/2_process_7z_files.sh)  script. This script unzips all CSV and XML files.
  ```sh
