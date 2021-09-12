@@ -31,15 +31,17 @@ As I mentioned before, on the [Stack Exchange data dump](https://archive.org/det
  0. Change the current directory to the working directory.
  ```sh
  cd <working_directory_path>
+ wget https://github.com/ghadesi/db-scripts/archive/refs/heads/master.zip
+ unzip master.zip
  mkdir sotorrent && cd ./sotorrent
  ```
  1. Run the [`1_download_so-dump.sh`](so-dump/1_download_so-dump.sh) script. This script download files related to Stack Overflow.
  ```sh
- source 1_download_so-dump.sh
- ```
+source ../db-scripts-master/sotorrent/so-dump/1_download_so-dump.sh
+```
  2. Run the [`2_process_7z_files.sh`](so-dump/2_process_7z_files.sh)  script. This script unzips all CSV and XML files.
  ```sh
- source 2_process_7z_files.sh
+ source ../db-scripts-master/sotorrent/so-dump/2_process_7z_files.sh
  ```
 
 ### 2. Install MySQL 
