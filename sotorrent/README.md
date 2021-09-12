@@ -26,8 +26,9 @@ As I mentioned before, on the [Stack Exchange data dump](https://archive.org/det
  0. Change the current directory to the working directory.
  ```sh
  cd <working_directory_path>
+ mkdir sotorrent
  ```
- 1. Run the [`1_download_so-dump.sh`](so-dump/1_download_so-dump.sh) script. This script download files related to Stack Overflow
+ 1. Run the [`1_download_so-dump.sh`](so-dump/1_download_so-dump.sh) script. This script download files related to Stack Overflow.
  ```sh
  source 1_download_so-dump.sh
  ```
