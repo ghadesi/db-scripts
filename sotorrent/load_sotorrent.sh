@@ -1,18 +1,20 @@
 #!/bin/sh
 set -Eeuo pipefail
 
-root_password="_AqUjvtv68E\$N!r]" # update this according to your local configuration
-sotorrent_password="4ar7JKS2mfgGHiDA" # update this according to your local configuration
+# Update this part according to your local configuration
+root_password="_AqUjvtv68E\$N!r]" 
+sotorrent_password="4ar7JKS2mfgGHiDA"
+
+# Absolute path to SQL dump files (consider MySQL's secure-file-priv option)
+data_path="/tmp" # For ~~> Linux and OSX
+# data_path="E:/Temp" # Cygwin ~~> For Windows OS
+
 log_file="sotorrent.log"
 sotorrent_db="sotorrent20_12"
 db_init=false
 load_so=false
 load_gh=false
 load_sotorrent=false
-
-# absolute path to SQL dump files (consider MySQL's secure-file-priv option)
-data_path="E:/Temp" # Cygwin
-#data_path="/tmp" # Linux
 
 sql_import_prefix="SET autocommit=0; SET unique_checks=0; SET foreign_key_checks=0;"
 sql_import_suffix="SET unique_checks=1; SET foreign_key_checks=1; COMMIT; SET autocommit=1;";
