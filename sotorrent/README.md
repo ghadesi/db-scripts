@@ -1,7 +1,12 @@
 # About The SO and SOTorrent
+
 Stack Overflow (SO) is the most popular question-and-answer (Q&A) website for software developers, providing a large amount of copyable code snippets. SOTorrent, an open dataset based on the official SO data dump. SOTorrent provides access to the version history of SO content at the level of whole posts and individual text and code blocks. 
 [Reference](https://arxiv.org/pdf/1809.02814.pdf)
 
+## Related Papers
+
+1. [SOTorrent: Studying the Origin, Evolution, and Usage of Stack Overflow Code Snippets](https://arxiv.org/abs/1809.02814)
+2. [SOTorrent: Reconstructing and Analyzing the Evolution of Stack Overflow Posts](https://arxiv.org/abs/1803.07311)
 
 ## Dataset
 
