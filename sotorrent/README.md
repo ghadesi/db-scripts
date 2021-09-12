@@ -58,7 +58,10 @@ For loading the SOTorrent dataset to created database, we should run [`load_soto
 source load_sotorrent.sh
 ```
 
-
+<!-- ABOUT THE SCHEME -->
+## Database schema of SOTorrent
+Then below photo indicates the tables and their relations from the offical SO dump that are marked gray.
+![DB_scheme](database-model/sotorrent_2018-12-09_model.png)
 
 ----
 
