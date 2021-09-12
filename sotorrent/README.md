@@ -1,11 +1,63 @@
+# About The SO and SOTorrent
+Stack Overflow (SO) is the most popular question-and-answer (Q&A) website for software developers, providing a large amount of copyable code snippets. SOTorrent, an open dataset based on the official SO data dump. SOTorrent provides access to the version history of SO content at the level of whole posts and individual text and code blocks. 
+[Reference](https://arxiv.org/pdf/1809.02814.pdf)
+
+
 ## Dataset
 
-The Stack Overflow data has been extracted from the official [Stack Exchange data dump](https://archive.org/details/stackexchange) released 2021-09-07.
-
-The GitHub references have been retrieved from the [Google BigQuery GitHub data set](https://cloud.google.com/bigquery/public-data/github) on 2021-01-04 (last updated 2020-12-31 according to table info).
+The Stack Overflow data has been extracted from the official [Stack Exchange data dump](https://archive.org/details/stackexchange) released 2021-09-07. The GitHub references have been retrieved from the [Google BigQuery GitHub data set](https://cloud.google.com/bigquery/public-data/github) on 2021-01-04 (last updated 2020-12-31 according to table info).
 
 
-## Importing the SOTorrent dataset
+
+## Stack Exchange Vs. Stack Overflow
+
+Stack Exchange is a network of sites, of which Stack Overflow is one. [This website](https://stackexchange.com/sites) indicates the coverage of the Stack Exchange website. In addition, Stack Overflow is a question and answer site for professional and enthusiast programmers. It's built and run by you as part of the Stack Exchange network of Q&A sites. 
+[Reference](https://meta.stackexchange.com/questions/79593/what-is-the-difference-between-stack-overflow-and-stack-exchange)
+
+
+## Offline Working - For OSX and Linux OSs
+
+### 1. Import the SOTorrent dataset to PC
+
+As I mentioned before, on the [Stack Exchange data dump](https://archive.org/details/stackexchange) page we can find all data dumps that Stack Exchange covers inside itself. However, we currently need just datasets related to the Stack Overflow website.
+ 
+ 0. Change the current directory to the working directory.
+ ```sh
+ cd <working_directory_path>
+ ```
+ 1. Run the [`1_download_so-dump.sh`](so-dump/1_download_so-dump.sh) script. This script download files related to Stack Overflow
+ ```sh
+ source 1_download_so-dump.sh
+ ```
+ 2. Run the [`2_process_7z_files.sh`](so-dump/2_process_7z_files.sh)  script. This script unzips all CSV and XML files.
+ ```sh
+ source 2_process_7z_files.sh
+ ```
+
+### 2. Install MySQL 
+In this step, we have to create a SQL database for inserting dataset into our local database. 
+
+> Set password for `root` and `sotorrent` MySQL users
+
+* For OSX 11.5.2:
+	- [This doc](https://flaviocopes.com/mysql-how-to-install/) helps us to create and start this service on our OSX.
+* For Ubuntu Distribution 20.04:
+	- [This doc](https://www.digitalocean.com/community/tutorials/how-to-install-mysql-on-ubuntu-18-04) aids to establish and prepare MySQL service on Ubuntu OS.
+
+### 3. Prepare and Load SOTorrent Dataset
+
+Edit the SQL script [`load_sotorrent.sh`](load_sotorrent.sh) to change:
+- The passwords for the `root` and `sotorrent` MySQL users
+- The path where the MySQL dump files are located.
+
+For loading the SOTorrent dataset to created database, we should run [`load_sotorrent.sh`](load_sotorrent.sh) script.
+```sh
+source load_sotorrent.sh
+```
+
+
+
+----
 
 1. Unzip all CSV and XML files.
 
@@ -25,6 +77,7 @@ The GitHub references have been retrieved from the [Google BigQuery GitHub data 
 
 4. Run the `load_sotorrent.sh` script.
 
+----
 
 
 ## MySQL Troubleshooting
