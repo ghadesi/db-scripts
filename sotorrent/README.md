@@ -15,7 +15,6 @@ The Stack Overflow data has been extracted from the official [Stack Exchange dat
 The GitHub references have been retrieved from the [Google BigQuery GitHub data set](https://cloud.google.com/bigquery/public-data/github) on 2021-01-04 (last updated 2020-12-31 according to table info).
 
 
-
 ## Stack Exchange Vs. Stack Overflow
 
 Stack Exchange is a network of sites, of which Stack Overflow is one. [This website](https://stackexchange.com/sites) indicates the coverage of the Stack Exchange website. In addition, Stack Overflow is a question and answer site for professional and enthusiast programmers. It's built and run by you as part of the Stack Exchange network of Q&A sites. 
@@ -29,28 +28,28 @@ Stack Exchange is a network of sites, of which Stack Overflow is one. [This webs
 As I mentioned before, on the [Stack Exchange data dump](https://archive.org/details/stackexchange) page we can find all data dumps that Stack Exchange covers inside itself. However, we currently need just datasets related to the Stack Overflow website.
  
  0. Change the current directory to the working directory.
- ```sh
- cd <working_directory_path>
- wget https://github.com/ghadesi/db-scripts/archive/refs/heads/master.zip
- unzip master.zip
- mkdir sotorrent && cd ./sotorrent
+ ```console
+ aminghadesi@MOOSELab$ cd <working_directory_path>
+ aminghadesi@MOOSELab$ wget https://github.com/ghadesi/db-scripts/archive/refs/heads/master.zip
+ aminghadesi@MOOSELab$ unzip master.zip
+ aminghadesi@MOOSELab$ mkdir sotorrent && cd ./sotorrent
  ```
  1. Run the [`1_download_so-dump.sh`](so-dump/1_download_so-dump.sh) script. This script download files related to Stack Overflow.
- ```sh
-chmod +x ../db-scripts-master/sotorrent/so-dump/1_download_so-dump.sh
-sh ../db-scripts-master/sotorrent/so-dump/1_download_so-dump.sh
+ ```console
+ aminghadesi@MOOSELab$ chmod +x ../db-scripts-master/sotorrent/so-dump/1_download_so-dump.sh
+ aminghadesi@MOOSELab$ sh ../db-scripts-master/sotorrent/so-dump/1_download_so-dump.sh
  ```
 If you are using SSH, it's better to run the task at background.
- ```sh
-nohup sh ../db-scripts-master/sotorrent/so-dump/1_download_so-dump.sh &
+ ```console
+ aminghadesi@MOOSELab$ nohup sh ../db-scripts-master/sotorrent/so-dump/1_download_so-dump.sh &
 ```
 By the bellow command we can check the status of download.
- ```sh
-watch tail -2 nohup.out
+ ```console
+ aminghadesi@MOOSELab$ watch tail -2 nohup.out
 ```
  2. Run the [`2_process_7z_files.sh`](so-dump/2_process_7z_files.sh)  script. This script unzips all CSV and XML files.
- ```sh
- source ../db-scripts-master/sotorrent/so-dump/2_process_7z_files.sh
+ ```console
+ aminghadesi@MOOSELab$ source ../db-scripts-master/sotorrent/so-dump/2_process_7z_files.sh
  ```
 
 ### 2. Install MySQL 
@@ -70,8 +69,8 @@ Edit the SQL script [`load_sotorrent.sh`](load_sotorrent.sh) to change:
 - The path where the MySQL dump files are located.
 
 For loading the SOTorrent dataset to created database, we should run [`load_sotorrent.sh`](load_sotorrent.sh) script.
-```sh
-source load_sotorrent.sh
+```console
+ aminghadesi@MOOSELab$ source load_sotorrent.sh
 ```
 
 <!-- ABOUT THE SCHEME -->
