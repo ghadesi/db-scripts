@@ -23,7 +23,7 @@ Stack Exchange is a network of sites, of which Stack Overflow is one. [This webs
 
 ## Offline Working - For OSX and Linux OSs
 
-### 1. Import the SOTorrent dataset to PC
+### 1. Import the Stack Exchange data dump to PC
 
 As I mentioned before, on the [Stack Exchange data dump](https://archive.org/details/stackexchange) page we can find all data dumps that Stack Exchange covers inside itself. However, we currently need just datasets related to the Stack Overflow website.
  
