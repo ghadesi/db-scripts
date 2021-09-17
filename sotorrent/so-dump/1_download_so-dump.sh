@@ -1,7 +1,7 @@
 # The env command wrapping
 #!/usr/bin/env bash
 DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)
-set -Eeuo pipefail
+#set -Eeuo pipefail
 
 # POSIX sh and especially bash have a number of settings that can help write safe shell scripts.
 # NAME
@@ -24,11 +24,11 @@ set -Eeuo pipefail
 # https://transang.me/best-practice-to-make-a-shell-script/
 # https://sipb.mit.edu/doc/safe-shell/
 
-wget https://archive.org/download/stackexchange/stackoverflow.com-Badges.7z
-wget https://archive.org/download/stackexchange/stackoverflow.com-Comments.7z
-wget https://archive.org/download/stackexchange/stackoverflow.com-PostHistory.7z
-wget https://archive.org/download/stackexchange/stackoverflow.com-PostLinks.7z
-wget https://archive.org/download/stackexchange/stackoverflow.com-Posts.7z
-wget https://archive.org/download/stackexchange/stackoverflow.com-Tags.7z
-wget https://archive.org/download/stackexchange/stackoverflow.com-Users.7z
-wget https://archive.org/download/stackexchange/stackoverflow.com-Votes.7z
+wget -c https://archive.org/download/stackexchange/stackoverflow.com-Badges.7z
+wget -c https://archive.org/download/stackexchange/stackoverflow.com-Comments.7z
+wget -c https://archive.org/download/stackexchange/stackoverflow.com-PostHistory.7z
+wget -c https://archive.org/download/stackexchange/stackoverflow.com-PostLinks.7z
+wget -c https://archive.org/download/stackexchange/stackoverflow.com-Posts.7z
+wget -c https://archive.org/download/stackexchange/stackoverflow.com-Tags.7z
+wget -c https://archive.org/download/stackexchange/stackoverflow.com-Users.7z
+wget -c https://archive.org/download/stackexchange/stackoverflow.com-Votes.7z
