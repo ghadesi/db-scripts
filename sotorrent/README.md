@@ -79,7 +79,7 @@ Then below photo indicates the tables and their relations from the offical SO du
 
 ![DB_scheme](database-model/sotorrent_2018-12-09_model.png)
 
-
+# Project
 ## Phase 0: Create Tags based on Stackoverflow (SO)
 
 ### We defined the major ML frameworks based on the Python language, including:
@@ -105,7 +105,7 @@ Then below photo indicates the tables and their relations from the offical SO du
 This [website](https://data.stackexchange.com/stackoverflow/queries) aids us in extracting tags from SO DB; also, we can use pattern matching for our queries. The LIKE keyword searches specific patterns based on the regular expression to contain the pattern. Besides that, this [link](https://docs.microsoft.com/en-us/previous-versions/sql/sql-server-2008-r2/ms187489(v=sql.105)?redirectedfrom=MSDN) helps us to work with LIKE statement properly. In the end, we can find many quarry examples on this [page](https://data.stackexchange.com/stackoverflow/queries).
 
 [Example](https://data.stackexchange.com/stackoverflow/query/1468684/identify-the-tensorflow-tags): 
-``` sql
+```sql
 -- Identify the Tensorflow tags related to ML
 Select
 CASE
