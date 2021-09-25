@@ -79,6 +79,55 @@ Then below photo indicates the tables and their relations from the offical SO du
 
 ![DB_scheme](database-model/sotorrent_2018-12-09_model.png)
 
+
+## Phase 0: Create Tags based on Stackoverflow (SO)
+
+### We defined the major ML frameworks based on the Python language, including:
+
+- TensorFlow: (https://www.tensorflow.org/) TensorFlow was developed at Google Brain and an open-source project. TF can: Perform regression, classification, neural networks, etc., and run on both CPUs and GPUs.
+
+- PyTorch: (https://pytorch.org/) PyTorch was developed by FAIR, Facebook AI Research.  It is the leading competitor to TensorFlow. In addition, it provides almost the same TensorFlow services.
+
+- Sikit-learn: (https://scikit-learn.org/stable/#) Scikit-learn provides a range of supervised and unsupervised learning algorithms via a consistent interface in Python.
+
+- Keras: (https://keras.io/) Keras is a neural network library and a deep learning API written in Python, running on top of the machine learning platform TensorFlow. It was developed with a focus on enabling fast experimentation.
+
+- NLTK: (https://www.nltk.org/) The Natural Language Toolkit, more commonly NLTK, is a suite of libraries and programs for symbolic and statistical natural language processing for English written in the Python programming language.
+
+- Huggingface: (https://huggingface.co/) Hugging Face is an open-source provider of natural language processing (NLP) technologies.
+
+- Spark ML: (https://spark.apache.org/docs/1.2.2/ml-guide.html) aims to provide a uniform set of high-level APIs that help users create and tune practical machine learning pipelines.
+
+- Torch: (http://torch.ch/) We ignore this framework due to the Lua programming language.
+
+### Find ML tags on the section of Stackoverflow (https://stackoverflow.com/tags):
+
+This [website](https://data.stackexchange.com/stackoverflow/queries) aids us in extracting tags from SO DB; also, we can use pattern matching for our queries. The LIKE keyword searches specific patterns based on the regular expression to contain the pattern. Besides that, this [link](https://docs.microsoft.com/en-us/previous-versions/sql/sql-server-2008-r2/ms187489(v=sql.105)?redirectedfrom=MSDN) helps us to work with LIKE statement properly. In the end, we can find many quarry examples on this [page](https://data.stackexchange.com/stackoverflow/queries).
+
+[Example](https://data.stackexchange.com/stackoverflow/query/1468684/identify-the-tensorflow-tags): 
+``` sql
+-- Identify the Tensorflow tags related to ML
+Select
+CASE
+  WHEN TagName LIKE '%tensorflow%' THEN 'tensorflow'
+  WHEN TagName LIKE '%pytorch%' THEN 'pytorch'
+  WHEN TagName LIKE '%scikit-learn%' THEN 'scikit-learn'
+  WHEN TagName LIKE '%keras%' THEN 'keras'
+  WHEN TagName LIKE '%nltk%' THEN 'nltk'
+  WHEN TagName LIKE '%huggingface%' THEN 'huggingface'
+  WHEN TagName LIKE '%spark-ml%' THEN 'spark-ml'
+END As Framework, TagName, [Count]
+From Tags
+Where (TagName LIKE '%tensorflow%' OR
+       TagName LIKE '%pytorch%' OR
+       TagName LIKE '%scikit-learn%' OR
+       TagName LIKE '%keras%' OR
+       TagName LIKE '%nltk%' OR
+       TagName LIKE '%huggingface%' OR
+       TagName LIKE '%spark-ml%') AND
+      [Count] > 0 -- We can ignore small tags numbers
+ORDER BY [Count] DESC
+```
 ----
 
 1. Unzip all CSV and XML files.
