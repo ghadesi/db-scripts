@@ -128,7 +128,7 @@ Where (TagName LIKE '%tensorflow%' OR
 ORDER BY [Count] DESC
 ```
 
-The result is here.
+The result is [here](TF_ML_Tags.csv).
 
 ## Phase 1: Exteract Q/A posts on Stackoverflow (SO) Based on the favorit tags from SOTorrent
 ### Informattion about SOTorrent DB:
@@ -165,9 +165,9 @@ First of all, we should create a project by clicking on "Select a project", clos
 
 In the next step, we have to insert our favorite tags, the Phase 0 result, into this environment. We can press three points on the right of the `bamboo-creek-327421` and click on the "Create dataset" option after that. We defined the `Tags` name for our Dataset ID and pressed the "CREATE DATASET" button. Then, we have to open the Tags dataset and choose the "+ CREATE TABLE" button and configure the below setups:
 
-PUT setup photo
+![Setup_photo](tableSettings.png)
 
-### Find Q/A based on the ML framework tags on Stackoverflow (https://stackoverflow.com/tags):
+### Find Q/A based on the ML framework tags on Stackoverflow:
 
 By the below command, we can reach our goal on this step:
 
@@ -227,6 +227,9 @@ SELECT posts.Id, posts.PostTypeId,
 FROM `sotorrent-org.2020_12_31.Posts` As posts
 WHERE posts.PostTypeId=2
 ```
+We change the query configuration to the below parameters:
+
+![query_photo](quarySettings.png)
 
 ### Phase 1 results:
 
