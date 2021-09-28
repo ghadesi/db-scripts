@@ -79,7 +79,6 @@ Then below photo indicates the tables and their relations from the offical SO du
 
 ![DB_scheme](database-model/sotorrent_2018-12-09_model.png)
 
-# Project
 ## Phase 0: Create Tags based on Stackoverflow (SO)
 
 ### We defined the major ML frameworks based on the Python language, including:
@@ -105,7 +104,7 @@ Then below photo indicates the tables and their relations from the offical SO du
 This [website](https://data.stackexchange.com/stackoverflow/queries) aids us in extracting tags from SO DB; also, we can use pattern matching for our queries. The LIKE keyword searches specific patterns based on the regular expression to contain the pattern. Besides that, this [link](https://docs.microsoft.com/en-us/previous-versions/sql/sql-server-2008-r2/ms187489(v=sql.105)?redirectedfrom=MSDN) helps us to work with LIKE statement properly. In the end, we can find many quarry examples on this [page](https://data.stackexchange.com/stackoverflow/queries).
 
 [Example](https://data.stackexchange.com/stackoverflow/query/1468684/identify-the-tensorflow-tags): 
-```sql
+``` sql
 -- Identify the Tensorflow tags related to ML
 Select
 CASE
@@ -128,6 +127,134 @@ Where (TagName LIKE '%tensorflow%' OR
       [Count] > 0 -- We can ignore small tags numbers
 ORDER BY [Count] DESC
 ```
+
+The result is here.
+
+## Phase 1: Exteract Q/A posts on Stackoverflow (SO) Based on the favorit tags from SOTorrent
+### Informattion about SOTorrent DB:
+1. The `sotorrent-org.2020_12_31.Posts` table: For each question post we select these informaion.
+- question_id
+- title
+- body
+- creation date
+- view count
+- answer count
+- comment count
+- score of question
+- with accepted answer or not
+- time to get accepted answer  
+- time to get first answer    
+
+2. The `PostType` table:
+
+      | Id | Type     |
+      |----|----------|
+      | 1  | Question |
+      | 2  | Answer   |
+
+### Prepare the BigQuary environment for our project:
+We did this part of the project by the BigQuary service. We added the SOTorrent DB from this [website](https://empirical-software.engineering/sotorrent/). We have to make sure that we signed in to the Gmail account, and by clicking on the left blue button, Online Access (BigQuary), we redirected to the Google Cloud Platform service. Then, we can see two projects in the "Explorer" section, including `sotorrent` and `bigquary-public-data`. The "+ COMPOSE NEW QUARY" button on the top right of the window aids us in implementing our SQL queries inside this environment. I have to mention that clicking on the `sotorrent` project indicates entire tables. If we want to see the schema and data on tables, we can see all of them just by double-clicking on a table. 
+
+At the first time, we usually receive the below error:
+
+> Access Denied: Project sotorrent-org: User does not have bigquery.jobs.create permission in project sotorrent-org.
+
+First of all, we should create a project by clicking on "Select a project", close to the Google Cloud Platform name on the top left, and then click on the "NEW PROJECT" button. We have to choose a name for our new project at the next step; we set "Project 37413" and also accepted `bamboo-creek-327421` name for Project ID. In the end, we have to select this project in the "Select a project" section.
+
+### Upload the CSV of the favorite tags to :
+
+In the next step, we have to insert our favorite tags, the Phase 0 result, into this environment. We can press three points on the right of the `bamboo-creek-327421` and click on the "Create dataset" option after that. We defined the `Tags` name for our Dataset ID and pressed the "CREATE DATASET" button. Then, we have to open the Tags dataset and choose the "+ CREATE TABLE" button and configure the below setups:
+
+PUT setup photo
+
+### Find Q/A based on the ML framework tags on Stackoverflow (https://stackoverflow.com/tags):
+
+By the below command, we can reach our goal on this step:
+
+```sql
+SELECT posts.Id, posts.PostTypeId, 
+        posts.AcceptedAnswerId, 
+        posts.CreationDate, 
+        posts.ViewCount, 
+        posts.AnswerCount, 
+        posts.CommentCount, 
+        posts.Score,
+        posts.Title,
+        posts.Body,
+        posts.Tags
+FROM `sotorrent-org.2020_12_31.Posts` As posts
+LEFT JOIN `smooth-zenith-326513.Tags.DesireTags` As tags On TRUE
+WHERE posts.PostTypeId=2 OR (posts.PostTypeId=1 AND posts.Tags like '%' || tags.TagName || '%')
+```
+Unfortunately, because of the numbers of answer rows, 30,680,111, and limitations on BigQuery:
+
+```sql
+SELECT COUNT(Id) 
+FROM `sotorrent-org.2020_12_31.Posts` AS posts
+WHERE posts.PostTypeId=2 
+```
+
+We cannot aggregate top conditions with together, So we decided to separate the conditions:
+
+#### Query 1
+```sql
+SELECT posts.Id, posts.PostTypeId, 
+        posts.AcceptedAnswerId, 
+        posts.CreationDate, 
+        posts.ViewCount, 
+        posts.AnswerCount, 
+        posts.CommentCount, 
+        posts.Score,
+        posts.Title,
+        posts.Body,
+        posts.Tags
+FROM `sotorrent-org.2020_12_31.Posts` As posts
+LEFT JOIN `smooth-zenith-326513.Tags.DesireTags` As tags On TRUE
+WHERE posts.PostTypeId=1 AND posts.Tags like '%' || tags.TagName || '%'
+```
+#### Query 2
+```sql
+SELECT posts.Id, posts.PostTypeId, 
+        posts.AcceptedAnswerId, 
+        posts.CreationDate, 
+        posts.ViewCount, 
+        posts.AnswerCount, 
+        posts.CommentCount, 
+        posts.Score,
+        posts.Title,
+        posts.Body,
+        posts.Tags
+FROM `sotorrent-org.2020_12_31.Posts` As posts
+WHERE posts.PostTypeId=2
+```
+
+### Phase 1 results:
+
+Email Test: yutyuy6urt@gmail.com
+
+#### Result of Query 1
+
+|Job Parameter|Description|
+| ------------- |-------------|
+|Job ID|`bamboo-creek-327421:US.bquxjob_20dcde75_17c2e80008b`|
+|User|`amin[dot]ghadesi[at]gmail[dot]com`|
+|Location|`United States (US)`|
+|Creation time|`Sep 28, 2021, 6:21:53 PM`|
+|Start time|`Sep 28, 2021, 6:21:53 PM`|
+|End time|`Sep 28, 2021, 6:22:14 PM`|
+|Duration|**20.9 sec**|
+|Bytes processed|**56.49 GB**|
+|Bytes billed|**56.49 GB**|
+|Job priority|`INTERACTIVE`|
+|Destination table|`bamboo-creek-327421:Tags.results-tag-1`|
+|Use legacy SQL|`false`|
+|Write preference|`Overwrite table`|
+|Slot time consumed|`27 min 43.396 sec`|
+|Bytes shuffled|`723.07 MB`|
+|Bytes spilled to disk|`0 B`|
+|Size|**359.3 MB**|
+|Number of rows|**163,194**|
+
 ----
 
 1. Unzip all CSV and XML files.
