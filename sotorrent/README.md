@@ -196,7 +196,7 @@ WHERE posts.PostTypeId=2
 
 We cannot aggregate top conditions with together, So we decided to separate the conditions:
 
-#### Query 1
+#### Query 1 (Questions)
 ```sql
 SELECT posts.Id, posts.PostTypeId, 
         posts.AcceptedAnswerId, 
@@ -212,7 +212,7 @@ FROM `sotorrent-org.2020_12_31.Posts` As posts
 LEFT JOIN `smooth-zenith-326513.Tags.DesireTags` As tags On TRUE
 WHERE posts.PostTypeId=1 AND posts.Tags like '%' || tags.TagName || '%'
 ```
-#### Query 2
+#### Query 2 (Answers)
 ```sql
 SELECT posts.Id, posts.PostTypeId, 
         posts.AcceptedAnswerId, 
@@ -220,6 +220,7 @@ SELECT posts.Id, posts.PostTypeId,
         posts.ViewCount, 
         posts.AnswerCount, 
         posts.CommentCount, 
+	posts.ParentId
         posts.Score,
         posts.Title,
         posts.Body,
