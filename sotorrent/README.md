@@ -220,7 +220,7 @@ SELECT posts.Id, posts.PostTypeId,
         posts.ViewCount, 
         posts.AnswerCount, 
         posts.CommentCount, 
-	posts.ParentId
+	posts.ParentId,
         posts.Score,
         posts.Title,
         posts.Body,
