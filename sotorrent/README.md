@@ -228,6 +228,20 @@ SELECT posts.Id, posts.PostTypeId,
 FROM `sotorrent-org.2020_12_31.Posts` As posts
 WHERE posts.PostTypeId=2
 ```
+#### Query 3: Find the median of numberical values
+```sql
+SELECT
+  PERCENTILE_CONT(posts.ViewCount, 0.5) OVER () AS View_median,
+  PERCENTILE_CONT(posts.AnswerCount, 0.5) OVER () AS Ans_count_median,
+  PERCENTILE_CONT(posts.CommentCount, 0.5) OVER () AS Com_count_median,
+  PERCENTILE_CONT(posts.Score, 0.5) OVER () AS Score_median
+FROM
+  `sotorrent-org.2020_12_31.Posts` As posts
+LIMIT
+  1
+  ```
+
+
 We change the query configuration to the below parameters:
 
 ![query_photo](quarySettings.png)
