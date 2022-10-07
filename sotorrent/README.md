@@ -273,6 +273,31 @@ Email Test: yutyuy6urt@gmail.com
 |Size|**359.3 MB**|
 |Number of rows|**163,194**|
 
+#### Update Query: Find updated posts
+```sql
+SELECT p.Id, p.PostTypeId, 
+        p.AcceptedAnswerId, 
+        p.CreationDate, 
+        p.ViewCount, 
+        p.AnswerCount, 
+        p.CommentCount, 
+        p.Score,
+        p.Title,
+        p.Body,
+        p.Tags
+FROM Posts as p
+inner join posts q 
+        on q.id = coalesce(p.parentid, p.id) -- only questions have tags
+WHERE p.CreationDate > '2020-12-31' AND      -- After this time
+      p.PostTypeId=1 AND                     -- Just questions
+      (p.Tags LIKE '%tensorflow%' OR
+       p.Tags LIKE '%pytorch%' OR
+       p.Tags LIKE '%scikit-learn%' OR
+       p.Tags LIKE '%keras%' OR
+       p.Tags LIKE '%nltk%' OR
+       p.Tags LIKE '%huggingface%' OR
+       p.Tags LIKE '%spark-ml%')
+```
 ----
 
 1. Unzip all CSV and XML files.
