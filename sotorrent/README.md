@@ -298,6 +298,63 @@ WHERE p.CreationDate > '2020-12-31' AND      -- After this time
        p.Tags LIKE '%huggingface%' OR
        p.Tags LIKE '%spark-ml%')
 ```
+
+#### Update Query: Find updated answers
+```sql
+with cte1 as (
+SELECT
+        p.Id, 
+        p.PostTypeId, 
+        p.AcceptedAnswerId, 
+        p.CreationDate, 
+        p.ViewCount, 
+        p.AnswerCount, 
+        p.CommentCount, 
+        p.Score,
+        p.Title,
+        p.Body,
+        p.Tags,
+        p.parentid
+
+FROM Posts as p
+inner join posts q 
+        on q.id = coalesce(p.parentid, p.id) -- only questions have tags
+
+WHERE p.CreationDate > '2020-12-31' AND      -- After this time
+      p.PostTypeId=1 AND                     -- Just answers
+      (p.Tags LIKE '%tensorflow%' OR
+       p.Tags LIKE '%pytorch%' OR
+       p.Tags LIKE '%scikit-learn%' OR
+       p.Tags LIKE '%keras%' OR
+       p.Tags LIKE '%nltk%' OR
+       p.Tags LIKE '%huggingface%' OR
+       p.Tags LIKE '%spark-ml%')
+)
+select
+        r.Id, 
+        --r.AcceptedAnswerId, 
+        --r.PostTypeId,
+        r.parentid,
+        --cte1.Id, 
+        --cte1.PostTypeId, 
+        cte1.AcceptedAnswerId, 
+        cte1.CreationDate, 
+        cte1.ViewCount, 
+        cte1.AnswerCount, 
+        cte1.CommentCount, 
+        cte1.Score,
+        cte1.Title,
+        cte1.Body,
+        cte1.Tags,
+        cte1.parentid
+
+from posts r 
+inner join cte1
+       on cte1.id = r.parentid
+where
+      r.PostTypeId=2
+```    
+      
 ----
 
 1. Unzip all CSV and XML files.
