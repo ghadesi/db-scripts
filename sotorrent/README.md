@@ -353,7 +353,58 @@ inner join cte1
        on cte1.id = r.parentid
 where
       r.PostTypeId=2
-```    
+```
+
+#### Update Query: Find the accepted answer metadata for each library
+
+```sql
+with cte1 as (
+SELECT
+        p.Id, 
+        p.PostTypeId, 
+        p.AcceptedAnswerId, 
+        p.CreationDate, 
+        p.ViewCount, 
+        p.AnswerCount, 
+        p.CommentCount, 
+        p.Score,
+        p.Title,
+        p.Body,
+        p.Tags,
+        p.parentid
+
+FROM Posts as p
+inner join posts q 
+        on q.id = coalesce(p.parentid, p.id) -- only questions have tags
+
+WHERE
+      p.PostTypeId=1 AND                     -- Just answers
+      p.AcceptedAnswerId IS NOT NULL AND     -- Has acc answer
+      p.Tags LIKE '%tensorflow%'
+      --(p.Tags LIKE '%tensorflow%' OR
+      -- p.Tags LIKE '%pytorch%' OR
+      -- p.Tags LIKE '%scikit-learn%' OR
+      -- p.Tags LIKE '%keras%' OR
+      -- p.Tags LIKE '%nltk%' OR
+      -- p.Tags LIKE '%huggingface%' OR
+      -- p.Tags LIKE '%spark-ml%')
+)
+select
+        r.Id,
+        r.parentid,
+        r.PostTypeId,
+        r.parentid,
+        r.CreationDate, 
+        r.Score,
+        r.Body,
+        r.LastActivityDate
+        
+from posts r 
+inner join cte1
+        on cte1.id = r.parentid
+where
+        r.PostTypeId=2
+```
       
 ----
 
